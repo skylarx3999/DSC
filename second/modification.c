@@ -19,6 +19,52 @@ Node *head;
 
 void menu();
 
+void menu()
+{
+    int option;
+    int c = 1;
+    printf("\n1. Enter nodes.");
+    printf("\n 2. Print nodes.");
+    printf("\n 3. Enter node at desired position.");
+    printf("\n 4. Delete nodes.");
+    printf("\n 5. Print maximum and minimum value");
+    printf("\n 6. Exit\n\n Enter your option ->");
+    scanf("%d", &option);
+    switch (option)
+    {
+    case 1:
+        createNodes();
+        break;
+    case 2:
+        printNodes();
+        break;
+    case 3:
+        insertAny();
+        break;
+    case 4:
+        printf("\n \n Do u want to delete first element ?[1/-1]: ");
+        scanf("%d", &c);
+
+        while ((c == 1) && (head != NULL))
+        {
+            del_nodes();
+            printf("\n Do u want to delete more ?[1/-1] : ");
+            scanf("%d", &c);
+        }
+        menu();
+        break;
+    case 5:
+        print_extreme();
+        break;
+    case 6:
+        return;
+        break;
+    default:
+        printf("\n\n Enter correct choice !!!\n");
+        menu();
+    }
+}
+
 void createNodes()
 {
     int d, i = 1;
@@ -122,52 +168,6 @@ void print_extreme()
     }
     printf("\n Largest Node  -> %d", max);
     printf("\n Smallest Node -> %d", min);
-}
-
-void menu()
-{
-    int option;
-    int c = 1;
-    printf("\n1. Enter nodes.");
-    printf("\n 2. Print nodes.");
-    printf("\n 3. Enter node at desired position.");
-    printf("\n 4. Delete nodes.");
-    printf("\n 5. Print maximum and minimum value");
-    printf("\n 6. Exit\n\n Enter your option ->");
-    scanf("%d", &option);
-    switch (option)
-    {
-    case 1:
-        createNodes();
-        break;
-    case 2:
-        printNodes();
-        break;
-    case 3:
-        insertAny();
-        break;
-    case 4:
-        printf("\n \n Do u want to delete first element ?[1/-1]: ");
-        scanf("%d", &c);
-
-        while ((c == 1) && (head != NULL))
-        {
-            del_nodes();
-            printf("\n Do u want to delete more ?[1/-1] : ");
-            scanf("%d", &c);
-        }
-        menu();
-        break;
-    case 5:
-        print_extreme();
-        break;
-    case 6:
-        return;
-        break;
-    default:
-        printf("\n\n Enter correct choice !!!\n");
-        menu();
-    }
 }
 
 int main()
