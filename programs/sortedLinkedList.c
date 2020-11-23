@@ -74,40 +74,53 @@ void display()
     }
 }
 
-void sortingList(int data)
+void sortingList()
 {
-    struct node *temp, *ptr;
-    ptr = head;
-    temp->data = data;
-    while (ptr->next != NULL)
-    {
-        /* code */
-    }
+    struct node *current = head, *index = NULL;
+    int temp;
 
-    if (head->data < temp->data)
+    if (head == NULL)
     {
-        printf("Space is empty\n");
+        return;
     }
-    // else
-    // {
-    //     temp = head;
-    //     int i = 1;
-    //     while (temp != NULL)
-    //     {
-    //         printf("The node %d contains the data %d\n", i, temp->data);
-    //         temp = temp->next;
-    //         i++;
-    //     }
-    //     printf("\n");
-    // }
+    else
+    {
+        while (current != NULL)
+        {
+            index = current->next;
+
+            while (index != NULL)
+            {
+                if (current->data > index->data)
+                {
+                    temp = current->data;
+                    current->data = index->data;
+                    index->data = temp;
+                }
+                index = index->next;
+            }
+            current = current->next;
+        }
+    }
 }
 
+int insertData(int data)
+{
+    struct node *new;
+    new = (struct node *)malloc(sizeof(struct node));
+    new->data = data;
+    new->next = head;
+    head = new;
+}
 int main()
 {
-    int insertedData, insertingElement;
+    int insertedData;
     create();
     display();
+    sortingList();
     printf("Enter the data to be inserted: \n");
     scanf("%d", &insertedData);
-    sortingList(insertedData);
+    insertData(insertedData);
+    sortingList();
+    display();
 }
