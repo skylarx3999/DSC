@@ -9,85 +9,76 @@ struct node
 };
 struct node *head, *last;
 void nodeInsertion();
-void insertBefore();
+int insertBefore();
 void deleteSpecified();
 void display();
 
-void createList(int n)
+void createList()
 {
-    int i, data;
+    int i = 2, data;
     struct node *newNode;
 
-    if (n >= 1)
+    head = (struct node *)malloc(sizeof(struct node));
+
+    if (head != NULL)
     {
-        head = (struct node *)malloc(sizeof(struct node));
+        printf("Enter data of 1 node: ");
+        scanf("%d", &data);
+        if (data == -1)
+            return;
 
-        if (head != NULL)
+        head->data = data;
+        head->prev = NULL;
+        head->next = NULL;
+
+        last = head;
+
+        while (1)
         {
-            printf("Enter data of 1 node: ");
-            scanf("%d", &data);
-
-            head->data = data;
-            head->prev = NULL;
-            head->next = NULL;
-
-            last = head;
-
-            for (i = 2; i <= n; i++)
+            newNode = (struct node *)malloc(sizeof(struct node));
+            if (newNode == NULL)
             {
-                newNode = (struct node *)malloc(sizeof(struct node));
-
-                if (newNode != NULL)
-                {
-                    printf("Enter data of %d node: ", i);
-                    scanf("%d", &data);
-
-                    newNode->data = data;
-                    newNode->prev = last;
-                    newNode->next = NULL;
-
-                    last->next = newNode;
-                    last = newNode;
-                }
-                else
-                {
-                    printf("Unable to allocate memory.");
-                    break;
-                }
+                printf("Space is not allocated\n");
+                exit(0);
             }
-
-            printf("\nDOUBLY LINKED LIST CREATED SUCCESSFULLY\n");
-        }
-        else
-        {
-            printf("Unable to allocate memory");
+            else
+            {
+                printf("Enter data of %d node: ", i);
+                scanf("%d", &data);
+                if (data == -1)
+                    break;
+                newNode->data = data;
+                newNode->prev = last;
+                newNode->next = NULL;
+                last->next = newNode;
+                last = newNode;
+                i++;
+            }
         }
     }
 }
-
 void main()
 {
     int choice = 0, data;
-    while (choice != 5)
+    printf("Enter -1 to stop adding data: ");
+    createList();
+    while (choice != 4)
     {
-        printf("\n1: Insert Node\n2: Insert Before Given Value\n3: Delete\n4: Display\n5: Exit");
+        printf("\n1: Insert Before Given Value\n2: Delete\n3: Display\n4: Exit");
         printf("\nEnter your choice?\n");
         scanf("\n%d", &choice);
         switch (choice)
         {
         case 1:
-            createList(data);
-            break;
-        case 2:
             insertBefore();
             break;
-        case 3:
+        case 2:
             deleteSpecified();
             break;
-        case 4:
+        case 3:
             display();
             break;
-        case 5:
+        case 4:
             exit(0);
             break;
         default:
@@ -95,95 +86,63 @@ void main()
         }
     }
 }
-void nodeInsertion()
+int insertBefore()
 {
-    struct node *ptr;
-    int item;
-    ptr = (struct node *)malloc(sizeof(struct node));
-    if (ptr == NULL)
-    {
-        printf("\nOVERFLOW");
-    }
-    else
-    {
-        printf("\nEnter Item value:   ");
-        scanf("%d", &item);
 
-        if (head == NULL)
-        {
-            ptr->next = NULL;
-            ptr->prev = NULL;
-            ptr->data = item;
-            head = ptr;
-        }
-        else
-        {
-            ptr->data = item;
-            ptr->prev = NULL;
-            ptr->next = head;
-            head->prev = ptr;
-            head = ptr;
-        }
-        printf("\nNode inserted\n");
-    }
-}
-void insertBefore()
-{
-    struct node *ptr, *temp;
-    int item, loc, i;
-    ptr = (struct node *)malloc(sizeof(struct node));
-    if (ptr == NULL)
+    struct node *newnode, *ptr, *preptr;
+    int val;
+    newnode = (struct node *)malloc(sizeof(struct node));
+    printf("Enter the Element to insert-> ");
+    scanf("%d", &newnode->data);
+    printf("\nEnter the value Before which you want to insert node: ");
+    scanf("%d", &val);
+    ptr = head;
+    preptr = ptr;
+    if (ptr->data == val)
     {
-        printf("\n OVERFLOW");
+        newnode->next = head;
+        head = newnode;
     }
     else
     {
-        temp = head;
-        printf("Enter the location:   ");
-        scanf("%d", &loc);
-        for (i = 0; i < loc; i++)
+        while (ptr->data != val)
         {
-            temp = temp->next;
-            if (temp == NULL)
+            preptr = ptr;
+            ptr = ptr->next;
+            if (ptr == NULL)
             {
-                printf("\n There are less than %d elements", loc);
-                return;
+                printf("Value not found\n");
+                return 1;
             }
         }
-        printf("Enter value");
-        scanf("%d", &item);
-        ptr->data = item;
-        ptr->next = temp->next;
-        ptr->prev = temp;
-        temp->next = ptr;
-        temp->next->prev = ptr;
-        printf("\nnode inserted\n");
+        preptr->next = newnode;
+        newnode->next = ptr;
     }
 }
 void deleteSpecified()
 {
     struct node *ptr, *temp;
     int val;
-    printf("\n Enter the data after which the node is to be deleted : ");
+    printf("Enter the value after which you want to delete node: ");
     scanf("%d", &val);
-    ptr = head;
-    while (ptr->data != val)
-        ptr = ptr->next;
-    if (ptr->next == NULL)
+    temp = head;
+    while (temp->data != val)
     {
-        printf("\nCan't delete\n");
+        temp = temp->next;
     }
-    else if (ptr->next->next == NULL)
+    if (temp->next->next == NULL)
     {
-        ptr->next = NULL;
+        temp->next = NULL;
+        printf("\nNode Deleted\n");
     }
     else
     {
-        temp = ptr->next;
-        ptr->next = temp->next;
-        temp->next->prev = ptr;
-        free(temp);
-        printf("\nnode deleted\n");
+
+        ptr = temp->next;
+        temp->next = ptr->next;
+        ptr->next->prev = temp;
+        free(ptr);
+        printf("\nNode Deleted\n");
     }
 }
 void display()

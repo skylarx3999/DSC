@@ -3,11 +3,11 @@
 // PEEK - RETURNS TOP ELEMENT OF THE STACK
 #include <stdio.h>
 int stack[100], choice, numberOfStackElements, top = -1, pushData, i;
-void push(void);
-void pop(void);
-void display(void);
-void peek(void);
-void peep(void);
+void push();
+void pop();
+void display();
+void peek();
+void peep();
 int main()
 {
     printf("\n Enter the size of STACK[MAX=100]:");
