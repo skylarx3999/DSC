@@ -52,6 +52,8 @@ void create()
     }
 }
 
+
+
 void display()
 {
     struct node *temp;

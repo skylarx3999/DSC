@@ -116,8 +116,8 @@ int main()
 {
     int insertedData;
     create();
-    display();
     sortingList();
+    display();
     printf("Enter the data to be inserted: \n");
     scanf("%d", &insertedData);
     insertData(insertedData);
