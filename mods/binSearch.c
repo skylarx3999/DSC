@@ -16,8 +16,9 @@ int recursiveBinarySearch(int array[], int start_index, int end_index, int eleme
 int main(void)
 {
     int array[max] = {1, 4, 7, 9, 16, 56, 70};
-    int n = 7;
-    int element = 9;
+    int n = 7, element;
+    printf("Enter the element to search: ");
+    scanf("%d", &element);
     int found_index = recursiveBinarySearch(array, 0, n - 1, element);
     if (found_index == -1)
     {
@@ -25,7 +26,7 @@ int main(void)
     }
     else
     {
-        printf("Element found at index : %d", found_index);
+        printf("Element %d found at index : %d", element, found_index);
     }
     return 0;
 }
