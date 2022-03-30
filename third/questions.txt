@@ -1,1 +1,0 @@
-Those who have completed all modifications of singly linked list. Read two singly linked list and concatenate.
